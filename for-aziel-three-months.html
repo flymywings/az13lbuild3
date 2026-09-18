@@ -1,0 +1,648 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#060913">
+  <meta name="description" content="Three months of Sean and Aziel — the month they were too busy living to photograph.">
+  <title>for Aziel — three months</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Gloock&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23060913'/%3E%3Cpath d='M43 11a24 24 0 1 0 10 36A22 22 0 0 1 43 11Z' fill='%23f3d58a'/%3E%3Ccircle cx='17' cy='18' r='2' fill='%23fff7d6'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      color-scheme: dark;
+      --night: #060913;
+      --night-soft: #0b1122;
+      --indigo: #111a38;
+      --silver: #d8dcec;
+      --mist: #929ab5;
+      --gold: #f0ce7a;
+      --gold-soft: #b89a57;
+      --line: rgba(216, 220, 236, .16);
+      --serif: "Gloock", Georgia, serif;
+      --mono: "DM Mono", "Courier New", monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--night); }
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      color: var(--silver);
+      background:
+        radial-gradient(circle at 50% 8%, rgba(54, 70, 128, .25), transparent 28rem),
+        linear-gradient(180deg, #080c19 0%, var(--night) 35%, #080b16 72%, #04060d 100%);
+      font-family: var(--serif);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button, a { font: inherit; }
+    a { color: inherit; }
+    ::selection { color: var(--night); background: var(--gold); }
+    :focus-visible { outline: 2px solid var(--gold); outline-offset: 5px; }
+
+    #stars {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: .86;
+    }
+
+    .grain {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      opacity: .035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.65'/%3E%3C/svg%3E");
+    }
+
+    .mast {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 20;
+      width: 100%;
+      padding: max(18px, env(safe-area-inset-top)) clamp(18px, 4vw, 52px) 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--serif);
+      font-size: clamp(.92rem, 2vw, 1.08rem);
+      font-style: italic;
+      color: rgba(216, 220, 236, .62);
+      background: linear-gradient(180deg, rgba(6,9,19,.94) 0%, rgba(6,9,19,.62) 64%, transparent 100%);
+      transition: opacity .55s ease, transform .55s ease;
+    }
+
+    .mast span:last-child { color: var(--gold); }
+    .mast.is-hidden {
+      opacity: 0;
+      transform: translateY(-10px);
+      pointer-events: none;
+    }
+
+    main, footer { position: relative; z-index: 2; }
+    .scene {
+      width: min(100%, 1180px);
+      min-height: 100svh;
+      margin: 0 auto;
+      padding: clamp(92px, 12vw, 150px) clamp(22px, 7vw, 96px);
+      display: grid;
+      align-items: center;
+      position: relative;
+    }
+
+    .scene-inner { width: min(100%, 760px); }
+    .centered { margin-inline: auto; text-align: center; }
+    .whisper {
+      display: inline-block;
+      margin-bottom: 24px;
+      color: var(--gold);
+      font-family: var(--serif);
+      font-size: clamp(1rem, 2.2vw, 1.18rem);
+      font-style: italic;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+    h1, h2, h3 { font-weight: 400; text-wrap: balance; }
+    h1 {
+      max-width: 900px;
+      margin: 0 auto;
+      font-size: clamp(3rem, 11vw, 7.8rem);
+      line-height: .94;
+      letter-spacing: -.045em;
+    }
+    h2 { font-size: clamp(2.45rem, 7vw, 5.4rem); line-height: 1; letter-spacing: -.035em; }
+    h3 { font-size: clamp(1.65rem, 4vw, 2.7rem); line-height: 1.12; }
+    .lead {
+      max-width: 620px;
+      margin: 28px auto 0;
+      color: var(--mist);
+      font-size: clamp(1.08rem, 2.4vw, 1.35rem);
+      line-height: 1.7;
+      text-wrap: pretty;
+    }
+    .copy {
+      max-width: 610px;
+      color: #bac0d2;
+      font-size: clamp(1.06rem, 2.1vw, 1.25rem);
+      line-height: 1.8;
+      text-wrap: pretty;
+    }
+    .copy strong { color: var(--silver); font-weight: 400; }
+
+    .hero { text-align: center; overflow: hidden; }
+    .hero .scene-inner { width: 100%; }
+    .hero-copy { position: relative; z-index: 3; }
+    .opening-light {
+      position: relative;
+      width: 10px;
+      height: 10px;
+      margin: 16px auto 76px;
+      border-radius: 50%;
+      background: #fff6d6;
+      box-shadow: 0 0 18px rgba(255,246,214,.75), 0 0 80px rgba(240,206,122,.28), 0 0 170px rgba(94,108,169,.28);
+    }
+    .opening-light::before, .opening-light::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(216,220,236,.72);
+      box-shadow: 0 0 12px rgba(216,220,236,.55);
+    }
+    .opening-light::before { width: 4px; height: 4px; top: -32px; left: -64px; }
+    .opening-light::after { width: 3px; height: 3px; top: 35px; right: -82px; }
+    .hero-sub { font-style: italic; }
+
+    .follow {
+      margin-top: 38px;
+      border: 0;
+      padding: 12px 8px;
+      color: var(--gold);
+      background: transparent;
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-style: italic;
+      cursor: pointer;
+    }
+    .follow span { display: block; margin-top: 10px; font-size: 1.15rem; animation: drift 2.2s ease-in-out infinite; }
+    @keyframes drift { 50% { transform: translateY(7px); opacity: .55; } }
+
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .9s ease, transform .9s ease; }
+    .reveal.is-visible { opacity: 1; transform: none; }
+
+    .birthday { grid-template-columns: minmax(0, 1fr) minmax(220px, .64fr); gap: clamp(55px, 11vw, 150px); }
+    .month-orbit {
+      justify-self: center;
+      width: min(78vw, 330px);
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      position: relative;
+      background: radial-gradient(circle, rgba(240,206,122,.1), rgba(83,96,153,.04) 38%, transparent 70%);
+      border-radius: 50%;
+    }
+    .three {
+      color: var(--gold);
+      font-family: var(--serif);
+      font-size: clamp(5rem, 15vw, 9rem);
+      line-height: 1;
+      text-shadow: 0 0 42px rgba(240, 206, 122, .18);
+    }
+    .month-orbit .date {
+      position: absolute;
+      bottom: 18%;
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--mist);
+    }
+    .small-star { position: absolute; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 12px var(--gold); }
+    .s1 { top: 9%; right: 28%; }
+    .s2 { bottom: 22%; left: 7%; width: 3px; height: 3px; }
+    .s3 { top: 38%; right: 3%; width: 3px; height: 3px; }
+
+    .finding-scene .scene-inner { width: min(100%, 760px); margin-inline: auto; }
+    .finding-copy { margin-top: 34px; }
+    .return-thought {
+      max-width: 660px;
+      margin: clamp(52px, 9vw, 96px) 0 0 auto;
+      color: var(--silver);
+      font-size: clamp(1.7rem, 4vw, 3rem);
+      font-style: italic;
+      line-height: 1.25;
+      text-align: right;
+    }
+
+    .unphotographed { text-align: center; }
+    .unphotographed .scene-inner { width: min(100%, 860px); }
+    .missed-words {
+      width: min(100%, 760px);
+      margin: clamp(52px, 9vw, 88px) auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(24px, 5vw, 58px);
+    }
+    .memory-word {
+      position: relative;
+      color: rgba(216,220,236,.68);
+      font-size: clamp(1.2rem, 3.2vw, 2rem);
+      font-style: italic;
+      white-space: nowrap;
+    }
+    .memory-word:nth-child(even) { color: var(--gold); transform: translateY(16px); }
+    .memory-word:nth-child(3) { transform: translateY(-12px); }
+    .memory-word::after {
+      content: "";
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      right: -17px;
+      top: 50%;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 10px currentColor;
+    }
+    .memory-word:last-child::after { display: none; }
+    .unphotographed .lead { margin-top: 0; }
+
+    .keepsake-scene { text-align: center; }
+    .keepsake-scene .scene-inner { width: min(100%, 800px); }
+    .keepsake-glow {
+      position: relative;
+      width: min(100%, 680px);
+      margin: clamp(46px, 8vw, 78px) auto 0;
+      padding: clamp(34px, 7vw, 66px) clamp(24px, 6vw, 58px);
+      border: 1px solid rgba(240,206,122,.2);
+      background: radial-gradient(circle at 50% 0%, rgba(240,206,122,.1), transparent 58%), rgba(14,20,42,.42);
+      box-shadow: 0 28px 90px rgba(0,0,0,.22), inset 0 1px rgba(255,255,255,.03);
+    }
+    .keepsake-glow::before {
+      content: "";
+      position: absolute;
+      top: -1px;
+      left: 50%;
+      width: 82px;
+      height: 1px;
+      transform: translateX(-50%);
+      background: var(--gold);
+      box-shadow: 0 0 22px rgba(240,206,122,.6);
+    }
+    .keepsake-glow p {
+      margin: 0;
+      color: var(--silver);
+      font-family: var(--serif);
+      font-size: clamp(1.35rem, 3.2vw, 2rem);
+      font-style: italic;
+      line-height: 1.55;
+      text-wrap: pretty;
+    }
+    .keepsake-note {
+      display: block;
+      margin-top: 28px;
+      color: var(--gold);
+      font: .7rem var(--mono);
+      letter-spacing: .14em;
+      text-transform: lowercase;
+    }
+
+    .distance-scene { overflow: hidden; }
+    .distance-scene .scene-inner { width: 100%; }
+    .distance-copy { max-width: 650px; margin-inline: auto; text-align: center; }
+    .distance-poem {
+      position: relative;
+      isolation: isolate;
+      width: min(100%, 820px);
+      margin: clamp(60px, 10vw, 110px) auto 0;
+      display: grid;
+      gap: clamp(40px, 7vw, 72px);
+    }
+    .distance-poem::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      inset: 8% 24%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(240,206,122,.11), rgba(240,206,122,.025) 45%, transparent 72%);
+      filter: blur(18px);
+      pointer-events: none;
+    }
+    .distance-pair {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 32px;
+      font-family: var(--serif);
+      font-size: clamp(1.2rem, 3vw, 1.9rem);
+      font-style: italic;
+      color: rgba(216,220,236,.66);
+    }
+    .distance-pair span:last-child {
+      max-width: 16em;
+      color: var(--gold);
+      text-align: right;
+    }
+    .distance-answer {
+      margin: clamp(8px, 2vw, 20px) 0 0;
+      text-align: center;
+      font-family: var(--serif);
+      font-size: clamp(2.1rem, 5.4vw, 4.5rem);
+      line-height: 1.05;
+      letter-spacing: -.025em;
+      color: var(--silver);
+    }
+    .distance-answer em {
+      color: var(--gold);
+      font-weight: 400;
+    }
+    .letter-scene { padding-bottom: clamp(100px, 15vw, 180px); }
+    .letter-shell {
+      width: min(100%, 760px);
+      margin: 0 auto;
+      padding: clamp(30px, 7vw, 76px);
+      border: 1px solid rgba(240,206,122,.18);
+      background: linear-gradient(155deg, rgba(18,27,56,.72), rgba(7,10,20,.88));
+      box-shadow: 0 30px 90px rgba(0,0,0,.35), inset 0 1px rgba(255,255,255,.035);
+      position: relative;
+    }
+    .letter-date { margin-bottom: 36px; color: var(--gold); font-family: var(--serif); font-size: 1rem; font-style: italic; }
+    .letter-body { color: #d0d3df; font-size: clamp(1.06rem, 2vw, 1.2rem); line-height: 1.85; }
+    .letter-body p { margin-bottom: 1.35em; }
+    .signoff { margin-top: 38px; color: var(--silver); font-size: 1.35rem; font-style: italic; }
+
+    .song-card {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-top: 46px;
+      padding: 18px;
+      color: var(--silver);
+      border: 1px solid var(--line);
+      text-decoration: none;
+      transition: border-color .25s ease, background .25s ease, transform .25s ease;
+    }
+    .song-card:hover { border-color: rgba(240,206,122,.55); background: rgba(240,206,122,.05); transform: translateY(-2px); }
+    .record {
+      flex: 0 0 52px;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: repeating-radial-gradient(circle, #171b28 0 3px, #252a39 4px 5px);
+      box-shadow: 0 0 22px rgba(0,0,0,.38);
+    }
+    .record::after { content: ""; width: 13px; height: 13px; border-radius: 50%; background: var(--gold); border: 4px solid #111522; }
+    .song-meta { flex: 1; }
+    .song-title { display: block; margin-bottom: 4px; font-size: 1.15rem; }
+    .song-artist { display: block; color: var(--mist); font: .63rem var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+    .song-arrow { color: var(--gold); font: 1.2rem var(--mono); }
+
+    .archive { min-height: 76svh; text-align: center; }
+    .archive .scene-inner { width: min(100%, 800px); }
+    .archive-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 46px; }
+    .archive-card {
+      min-height: 190px;
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: left;
+      text-decoration: none;
+      color: var(--silver);
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.018);
+      cursor: pointer;
+      transition: border-color .25s ease, transform .25s ease, background .25s ease;
+    }
+    .archive-card:hover { transform: translateY(-4px); border-color: rgba(240,206,122,.45); background: rgba(240,206,122,.035); }
+    .archive-date { color: var(--gold); font-size: .98rem; font-style: italic; }
+    .archive-card h3 { margin: 32px 0 8px; font-size: 1.75rem; }
+    .archive-card p { margin: 0; color: var(--mist); font-size: .98rem; line-height: 1.5; }
+    .archive-open { margin-top: 22px; color: var(--gold); font: .62rem var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+
+    footer {
+      padding: 30px 22px max(38px, env(safe-area-inset-bottom));
+      text-align: center;
+      color: rgba(146,154,181,.55);
+      font: .63rem/1.8 var(--mono);
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 720px) {
+      .birthday { grid-template-columns: 1fr; }
+      .month-orbit { grid-row: 1; }
+      .return-thought { text-align: left; }
+      .missed-words { flex-direction: column; gap: 25px; }
+      .memory-word:nth-child(n) { transform: none; }
+      .archive-grid { grid-template-columns: 1fr; }
+      .distance-pair { flex-direction: column; gap: 9px; }
+      .distance-pair:nth-child(2) { align-items: flex-end; }
+      .distance-pair:nth-child(2) span:first-child { text-align: right; }
+    }
+
+    @media (max-width: 420px) {
+      .mast { font-size: .9rem; }
+      .scene { padding-inline: 19px; }
+      .letter-shell { padding-inline: 24px; }
+      .song-card { gap: 13px; padding: 14px; }
+      .record { flex-basis: 44px; width: 44px; height: 44px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="stars" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+  <header class="mast"><span>for my mahal</span><span>three months with you</span></header>
+
+  <main>
+    <section class="scene hero" id="top" aria-labelledby="hero-title">
+      <div class="scene-inner hero-copy">
+        <div class="opening-light reveal" aria-hidden="true"></div>
+        <span class="whisper reveal">three months, still choosing us</span>
+        <h1 id="hero-title" class="reveal">the month we didn't photograph.</h1>
+        <p class="lead hero-sub reveal">maybe life got busy. maybe we were tired. maybe, when we finally had each other, we were too busy living it.</p>
+        <button class="follow reveal" type="button" data-scroll="#september">keep reading<span aria-hidden="true">↓</span></button>
+      </div>
+    </section>
+
+    <section class="scene birthday" id="september" aria-labelledby="september-title">
+      <div class="scene-inner reveal">
+        <span class="whisper">september, with you</span>
+        <h2 id="september-title">september felt different.</h2>
+        <p class="copy">it was my birth month, but what made it feel special wasn't a perfect day or one big moment. it was getting to enter another part of my life with you already in it. somehow, just knowing i had you made the whole month feel warmer.</p>
+        <p class="copy"><strong>three months in, and you're no longer only someone i love on special days. you're someone who makes ordinary days feel worth remembering too.</strong></p>
+      </div>
+      <div class="month-orbit reveal" aria-label="Three months together, September 19, 2026">
+        <span class="small-star s1"></span><span class="small-star s2"></span><span class="small-star s3"></span>
+        <span class="three">3</span><span class="date">months with you</span>
+      </div>
+    </section>
+
+    <section class="scene finding-scene" id="finding" aria-labelledby="finding-title">
+      <div class="scene-inner">
+        <span class="whisper reveal">in the spaces between</span>
+        <h2 id="finding-title" class="reveal">we kept finding little ways back.</h2>
+        <div class="finding-copy reveal">
+          <p class="copy">school filled most of our week. there were tired days, shorter conversations, and times when our free hours seemed to pass right by each other.</p>
+          <p class="copy">but even then, we kept making little spaces for us—a message between everything else, a random talk, a stolen picture, whatever time we could make ours.</p>
+        </div>
+        <p class="return-thought reveal">love became quieter this month.<br>it never became smaller.</p>
+      </div>
+    </section>
+
+    <section class="scene unphotographed" id="unphotographed" aria-labelledby="unphotographed-title">
+      <div class="scene-inner">
+        <span class="whisper reveal">what the camera missed</span>
+        <h2 id="unphotographed-title" class="reveal">not every memory needed proof.</h2>
+        <div class="missed-words" aria-label="random talks, stolen pictures, tired days, little spaces for us, moments we forgot to capture">
+          <span class="memory-word reveal">random talks</span>
+          <span class="memory-word reveal">stolen pictures</span>
+          <span class="memory-word reveal">tired days</span>
+          <span class="memory-word reveal">little spaces for us</span>
+          <span class="memory-word reveal">moments we forgot to capture</span>
+        </div>
+        <p class="lead reveal">there aren't many pictures from this month. but there was still so much of us in it—in the talking, the waiting, the tiredness, and the way we kept finding our way back.</p>
+      </div>
+    </section>
+
+    <section class="scene keepsake-scene" id="keepsake" aria-labelledby="keepsake-title">
+      <div class="scene-inner centered">
+        <span class="whisper reveal">and one thing you could keep</span>
+        <h2 id="keepsake-title" class="reveal">something real to hold on to.</h2>
+        <div class="keepsake-glow reveal">
+          <p>maybe the best part of this month is the gift box i gave you. after so much of us lived in calls, messages, and moments we forgot to capture, it became something tangible—something from me that can stay with you, even when i can't.</p>
+          <span class="keepsake-note">hold on to it for me, hehe :&gt;</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="scene distance-scene" id="distance" aria-labelledby="distance-title">
+      <div class="scene-inner">
+        <div class="distance-copy reveal">
+          <span class="whisper">even from here</span>
+          <h2 id="distance-title">far away, falling deeper.</h2>
+          <p class="lead">the distance stayed the same. my feelings didn't. somewhere inside all the ordinary, busy days, i kept finding more of you to love.</p>
+        </div>
+        <div class="distance-poem" aria-label="Different places, still part of each other's days. Full weeks, little ways back. The distance stayed. So did we.">
+          <div class="distance-pair reveal"><span>different places.</span><span>still part of each other's days.</span></div>
+          <div class="distance-pair reveal"><span>full weeks.</span><span>little ways back.</span></div>
+          <p class="distance-answer reveal">the distance stayed.<br><em>so did we.</em></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="scene letter-scene" id="letter" aria-labelledby="letter-title">
+      <article class="letter-shell reveal">
+        <div class="letter-date">three months with you · september 19, 2026</div>
+        <h2 id="letter-title">for my mahal,</h2>
+        <div class="letter-body">
+          <p>happy third monthsary my love :))</p>
+          <p>this month feels harder to put into pictures because honestly, we barely took any. most of it was just us talking whenever we could, sending random stolen pictures, being tired from school, or getting so caught up in the moment that neither of us thought about saving it. but i think that's what makes it feel real. there may not be a perfect little album of this month, but i still remember the feeling of having you in it.</p>
+          <p>september is my birth month, and somehow it already felt more special knowing i got to spend it as someone you love. you didn't have to turn every day into something big. just having you there—someone i could think about between classes, someone i could talk to after a long day, someone i could miss and still feel close to—made this month different for me. :></p>
+          <p>and then there's the gift box i gave you. i think that might be my favorite part of this month, because it's something real you can hold on to—a little piece of my love that gets to stay near you when i can't. hehe :></p>
+          <p>school has changed the rhythm of us. our weeks are full, and sometimes it feels like our free time keeps missing each other. there are days when we're both too tired, days when the conversations are shorter, and days when life asks for almost everything we have. but even then, we still find little spaces for each other. and i think i'm learning that love doesn't become less real just because it has to fit between responsibilities.</p>
+          <p>if anything, i feel like i'm falling deeper. not only because of the sweet or exciting moments, but because of the ordinary ones too. because even from far away, even when we're busy, you keep becoming part of how my days feel. i carry you with me in ways a camera could never really capture.</p>
+          <p>so maybe this month doesn't have many pictures. maybe we were too busy, too tired, or too present to take them. that's okay. i don't need proof that it mattered. i know it did because i lived it with you.</p>
+          <p>three months in, and i'm still finding my way toward you. still learning you. still choosing you. and somehow, my love for you keeps getting quieter, steadier, and deeper all at once. :))</p>
+          <p>i love you so much, my baby, my mahal, my langga. here's to the moments we captured, the ones we didn't, and all the ordinary days still waiting for us.</p>
+          <p class="signoff">yours always,<br>Sean</p>
+        </div>
+        <a class="song-card" href="https://open.spotify.com/track/5Q6Xzp25aXYxNJ4B6vBkcf?si=de41610776284325" target="_blank" rel="noopener" aria-label="Play Luna, 2011 Remaster by The Smashing Pumpkins on Spotify">
+          <span class="record" aria-hidden="true"></span>
+          <span class="song-meta"><span class="song-title">Luna — 2011 Remaster</span><span class="song-artist">The Smashing Pumpkins · play on Spotify</span></span>
+          <span class="song-arrow" aria-hidden="true">↗</span>
+        </a>
+      </article>
+    </section>
+
+    <section class="scene archive" id="archive" aria-labelledby="archive-title">
+      <div class="scene-inner">
+        <span class="whisper reveal">before this night</span>
+        <h2 id="archive-title" class="reveal">our first two months.</h2>
+        <p class="lead reveal">two little worlds from the months that brought us here.</p>
+        <div class="archive-grid reveal">
+          <a class="archive-card" href="https://flymywings.github.io/az13l/" target="_blank" rel="noopener noreferrer">
+            <span class="archive-date">july 19, 2026</span>
+            <span><h3>our first month.</h3><p>the beginning, the layers, and every version of you worth staying for.</p></span>
+            <span class="archive-open">open this memory ↗</span>
+          </a>
+          <a class="archive-card" href="https://flymywings.github.io/az13lbuild2/" target="_blank" rel="noopener noreferrer">
+            <span class="archive-date">august 19, 2026</span>
+            <span><h3>our second month.</h3><p>school beginning again, ordinary days, and learning how to keep choosing us.</p></span>
+            <span class="archive-open">open this memory ↗</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>made for aziel, with all my love.<br>september 19, 2026</footer>
+
+  <script>
+    (() => {
+      "use strict";
+      const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const canvas = document.getElementById("stars");
+      const ctx = canvas.getContext("2d");
+      let stars = [], raf = 0;
+
+      function sizeStars() {
+        const dpr = Math.min(devicePixelRatio || 1, 2);
+        canvas.width = Math.round(innerWidth * dpr);
+        canvas.height = Math.round(innerHeight * dpr);
+        canvas.style.width = innerWidth + "px";
+        canvas.style.height = innerHeight + "px";
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        const count = Math.min(150, Math.floor((innerWidth * innerHeight) / 8500));
+        stars = Array.from({ length: count }, (_, i) => ({
+          x: Math.random() * innerWidth,
+          y: Math.random() * innerHeight,
+          r: Math.random() * 1.05 + .22,
+          a: Math.random() * .62 + .16,
+          phase: Math.random() * Math.PI * 2,
+          speed: .006 + Math.random() * .012,
+          gold: i % 17 === 0
+        }));
+      }
+
+      function paintStars(t = 0) {
+        ctx.clearRect(0, 0, innerWidth, innerHeight);
+        for (const s of stars) {
+          const alpha = reduced ? s.a : s.a * (.72 + Math.sin(t * s.speed + s.phase) * .28);
+          ctx.beginPath();
+          ctx.fillStyle = s.gold ? `rgba(240,206,122,${alpha})` : `rgba(216,220,236,${alpha})`;
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        if (!reduced) raf = requestAnimationFrame(paintStars);
+      }
+      sizeStars();
+      paintStars();
+      addEventListener("resize", () => { cancelAnimationFrame(raf); sizeStars(); paintStars(); }, { passive: true });
+
+      const reveal = document.querySelectorAll(".reveal");
+      if (reduced || !("IntersectionObserver" in window)) reveal.forEach(el => el.classList.add("is-visible"));
+      else {
+        const observer = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: .13, rootMargin: "0px 0px -8%" });
+        reveal.forEach(el => observer.observe(el));
+      }
+
+      const mast = document.querySelector(".mast");
+      const hero = document.querySelector(".hero");
+      if ("IntersectionObserver" in window) {
+        new IntersectionObserver(([entry]) => {
+          mast.classList.toggle("is-hidden", !entry.isIntersecting);
+        }, { threshold: .22 }).observe(hero);
+      }
+
+      document.querySelectorAll("[data-scroll]").forEach(button => button.addEventListener("click", () => {
+        document.querySelector(button.dataset.scroll).scrollIntoView({ behavior: reduced ? "auto" : "smooth" });
+      }));
+
+    })();
+  </script>
+</body>
+</html>
